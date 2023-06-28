@@ -41,7 +41,6 @@ function App() {
     hover: {
       scale: 1.1,
       originX: 0,
-      transition: { duration: 0.3 },
     },
     hidden: {
       opacity: 0,
@@ -76,16 +75,16 @@ function App() {
   }
 
   return (
-    <div className="flex h-full w-screen justify-center dark:bg-slate-900">
+    <div className="flex h-full w-screen justify-center duration-75 dark:bg-slate-900">
       <div className="w-max h-full text-neutral-300 flex flex-col gap-2.5">
         <header className="header flex flex-col gap-2.5">
           <motion.div
             className="flex justify-between items-center bg-stone-400/[0.13]  px-2.5 py-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
+            transition={{ duration: 1 }}
           >
-            <h1 className="text-6xl font-sans font-bold">Pablo</h1>
+            <h1 className="text-6xl font-bold">Pablo</h1>
 
             <Lottie
               animationData={darkModeButton}
@@ -106,7 +105,7 @@ function App() {
               <p className="text-6xl">Front-End Developer</p>
               <p className="text-8xl">React</p>
               <motion.button
-                className="w-80 p-2.5 text-4xl bg-yellow-100 text-yellow-400/[0.8] rounded-lg"
+                className="w-80 p-2.5 text-4xl bg-yellow-100 text-yellow-400/[0.8] duration-300 dark:bg-white dark:text-neutral-900 rounded-lg"
                 variants={buttonVariants}
                 whileHover="hover"
                 onClick={handleOnClickProjects}
@@ -114,7 +113,7 @@ function App() {
                 Proyectos
               </motion.button>
               <motion.button
-                className="w-80 p-2.5 text-4xl bg-yellow-100 text-yellow-400/[0.8] rounded-lg"
+                className="w-80 p-2.5 text-4xl bg-yellow-100 text-yellow-400/[0.8] rounded-lg duration-300  dark:bg-white dark:text-neutral-900"
                 variants={buttonVariants}
                 whileHover="hover"
                 onClick={handleOnClickInfo}
@@ -139,7 +138,8 @@ function App() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 1, delay: 0.2 * item }}
                 >
-                  <ProjectCard />
+                  <ProjectCard 
+                  />
                 </motion.div>
               ))}
             </section>
@@ -156,7 +156,7 @@ function App() {
             )}
           </div>
         </main>
-        <footer className="footer flex justify-center text-sm font-medium py-2.5 bg-slate-800/[0.5]">
+        <footer className="flex justify-center text-sm font-medium py-2.5 bg-slate-800/[0.5]">
           © 2023 Pablo Araya Díaz
         </footer>
       </div>
