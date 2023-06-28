@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+
+import { getFirestore, doc, getDoc, getDocs, collection } from "firebase/firestore";
 import "./App.css";
 import ProjectCard from "./components/ProjectCard";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import InfoCard from "./components/InfoCard";
 import Lottie from "lottie-react";
 import darkModeButton from "./assets/animations/darkModeButton.json";
@@ -10,7 +12,6 @@ function App() {
   const [projects, setProjects] = useState(true);
   const [info, setInfo] = useState(false);
   const [clickCount, setClickCount] = useState(0);
-  const [mode, setMode] = useState(false);
   const [theme, setTheme] = useState("dark");
 
   const lottieRef = useRef(null);
@@ -25,6 +26,17 @@ function App() {
     let segments = theme !== "light" ? [1, 60] : [50, 1];
     lottieRef.current.setSpeed(3);
     lottieRef.current.playSegments(segments, true);
+
+    const querydb = getFirestore();
+    const queryDoc = collection(querydb, "Proyectos");
+    const postData = []
+    getDocs(queryDoc).then((response) =>{
+      console.log('Response', response);
+      response.docs.forEach((doc) => {
+        console.log('Doc', doc.data());
+        
+      })
+    }) 
   }, [theme]);
 
   const parentVariants = {
@@ -65,10 +77,8 @@ function App() {
     setClickCount(clickCount + 1);
 
     if (clickCount === 0) {
-      setMode(false);
       setTheme("light");
     } else if (clickCount === 1) {
-      setMode(true);
       setClickCount(0);
       setTheme("dark");
     }
@@ -79,10 +89,9 @@ function App() {
       <div className="w-max h-full text-neutral-300 flex flex-col gap-2.5">
         <header className="header flex flex-col gap-2.5">
           <motion.div
-            className="flex justify-between items-center bg-stone-400/[0.13]  px-2.5 py-5"
+            className="flex justify-between items-center bg-stone-400/[0.13] duration-1000  px-2.5 py-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
           >
             <h1 className="text-6xl font-bold">Pablo</h1>
 
