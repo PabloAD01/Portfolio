@@ -1,20 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-
-import { getFirestore, doc, getDoc, getDocs, collection } from "firebase/firestore";
+import { getFirestore, getDocs, collection } from "firebase/firestore";
 import "./App.css";
 import ProjectCard from "./components/ProjectCard";
 import { motion } from "framer-motion";
 import InfoCard from "./components/InfoCard";
 import Lottie from "lottie-react";
 import darkModeButton from "./assets/animations/darkModeButton.json";
+import {Link} from "react-router-dom";
 
 function App() {
   const [projects, setProjects] = useState(true);
   const [info, setInfo] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const [theme, setTheme] = useState("dark");
+  const [posts, setPosts] = useState([]);
 
   const lottieRef = useRef(null);
+
+  
 
   useEffect(() => {
     if (theme === "light") {
@@ -27,17 +30,27 @@ function App() {
     lottieRef.current.setSpeed(3);
     lottieRef.current.playSegments(segments, true);
 
+    
+  }, [theme]);
+
+  useEffect(() => {
     const querydb = getFirestore();
     const queryDoc = collection(querydb, "Proyectos");
     const postData = []
     getDocs(queryDoc).then((response) =>{
       console.log('Response', response);
       response.docs.forEach((doc) => {
-        console.log('Doc', doc.data());
-        
+       postData.push(doc.data());
+       
       })
-    }) 
-  }, [theme]);
+      console.log('PostData',postData)
+      setPosts(postData)
+
+    })
+  }, []);
+
+  
+
 
   const parentVariants = {
     hidden: {
@@ -94,6 +107,11 @@ function App() {
             animate={{ opacity: 1 }}
           >
             <h1 className="text-6xl font-bold">Pablo</h1>
+            <button>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+              
+            </button>
 
             <Lottie
               animationData={darkModeButton}
@@ -141,15 +159,18 @@ function App() {
         >
           {projects && (
             <section className="projects grid gap-3 items-stretch content-center grid-cols-2 auto-rows-auto">
-              {[1, 2, 3, 4].map((item, index) => (
-                <motion.div
+              {posts.map((post, index) => (
+                <motion.a
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 1, delay: 0.2 * item }}
+                  transition={{ duration: 1, delay: 0.2 * index }}
+                  href={post.url || ''}
+
                 >
-                  <ProjectCard 
+                  <ProjectCard
+                  post={post}
                   />
-                </motion.div>
+                </motion.a>
               ))}
             </section>
           )}
