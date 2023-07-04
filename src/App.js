@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import InfoCard from "./components/InfoCard";
 import Lottie from "lottie-react";
 import darkModeButton from "./assets/animations/darkModeButton.json";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { getAllProjects } from "./firebase/api";
 
 function App() {
   const [projects, setProjects] = useState(true);
@@ -16,8 +17,6 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   const lottieRef = useRef(null);
-
-  
 
   useEffect(() => {
     if (theme === "light") {
@@ -29,28 +28,14 @@ function App() {
     let segments = theme !== "light" ? [1, 60] : [50, 1];
     lottieRef.current.setSpeed(3);
     lottieRef.current.playSegments(segments, true);
-
-    
   }, [theme]);
 
   useEffect(() => {
-    const querydb = getFirestore();
-    const queryDoc = collection(querydb, "Proyectos");
-    const postData = []
-    getDocs(queryDoc).then((response) =>{
-      console.log('Response', response);
-      response.docs.forEach((doc) => {
-       postData.push(doc.data());
-       
-      })
-      console.log('PostData',postData)
-      setPosts(postData)
-
-    })
+    getAllProjects().then((response) => {
+      console.log("Response", response);
+      setPosts(response);
+    });
   }, []);
-
-  
-
 
   const parentVariants = {
     hidden: {
@@ -110,7 +95,6 @@ function App() {
             <button>
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
-              
             </button>
 
             <Lottie
@@ -159,17 +143,14 @@ function App() {
         >
           {projects && (
             <section className="projects grid gap-3 items-stretch content-center grid-cols-2 auto-rows-auto">
-              {posts.map((post, index) => (
+              {posts?.map((post, index) => (
                 <motion.a
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 1, delay: 0.2 * index }}
-                  href={post.url || ''}
-
+                  href={post.url || ""}
                 >
-                  <ProjectCard
-                  post={post}
-                  />
+                  <ProjectCard post={post} />
                 </motion.a>
               ))}
             </section>

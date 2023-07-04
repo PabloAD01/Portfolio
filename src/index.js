@@ -5,22 +5,21 @@ import AdminLayout from "./layouts/AdminLayout";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "./firebase/config.js";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GlobalProvider } from "./providers/provider.js";
 import Login from "./pages/login";
 import PrivateRoute from "./firebase/PrivateRoute";
-import Proyectos from "./pages/proyectos";
+import Proyectos from "./pages/admin/proyectos";
+import Dashboard from "./pages/dashboard";
+import EditarProyectos from "./pages/admin/editar-proyectos";
+import AñadirProyectos from "./pages/admin/añadir-proyectos";
 
-
+// initializeApp(firebaseConfig);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GlobalProvider>
-      <Router>
+    <Router>
+      <GlobalProvider>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
@@ -28,14 +27,19 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route
             path="/admin"
             element={
-              <PrivateRoute><AdminLayout/></PrivateRoute>
+              <PrivateRoute>
+                <AdminLayout />
+              </PrivateRoute>
             }
           >
-            <Route path="proyectos" element={<Proyectos/>} />
+            <Route path="" element={<Dashboard />} />
+            <Route path="proyectos" element={<Proyectos />} />
+            <Route path="proyectos/editar/:id" element={<EditarProyectos />} />
+            <Route path="proyectos/añadir" element={<AñadirProyectos />} />
           </Route>
         </Routes>
-      </Router>
-    </GlobalProvider>
+      </GlobalProvider>
+    </Router>
   </React.StrictMode>
 );
 

@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import { userSignOut } from "../firebase/utils";
 import { GlobalContext } from "../providers/provider.js";
 import { motion } from "framer-motion";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const AdminLayout = () => {
-  const { authUser, setAuthUser } = useContext(GlobalContext);
+  const { authUser, userSignOut } = useContext(GlobalContext);
 
-  const handleSignOut = () => {
-    setAuthUser(undefined);
-    userSignOut();
+  const navigate = useNavigate();
+
+  const handleNavigation = () => {
+    navigate("/admin/proyectos", { replace: true });
   };
 
   return (
@@ -24,7 +24,7 @@ const AdminLayout = () => {
           <ion-icon name="person-circle" size="large"></ion-icon>
           <h1>{`Logged in as ${authUser.email}`}</h1>
         </div>
-        <button onClick={handleSignOut}>Sign Out</button>
+        <button onClick={userSignOut}>Sign Out</button>
       </header>
       <div className="flex gap-2.5px w-full h-full overflow-hidden">
         <aside className="w-64 flex flex-col bg-slate-500/[0.5] text-center p-2.5 gap-5 overflow-y-auto">
@@ -32,68 +32,12 @@ const AdminLayout = () => {
           <button className="hover:bg-slate-500/[0.55]">Inicio</button>
           <button className="hover:bg-slate-500/[0.55]">Inicio</button>
           <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <Link to={"/admin/proyectos"} className="hover:bg-slate-500/[0.55]">
+          <button
+            onClick={handleNavigation}
+            className="hover:bg-slate-500/[0.55]"
+          >
             Proyectos
-          </Link>
+          </button>
         </aside>
         <main className="w-full p-2.5 bg-slate-500/[0.9] overflow-y-auto p-4">
           <Outlet />
