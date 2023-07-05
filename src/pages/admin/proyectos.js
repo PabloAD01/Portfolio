@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { getAllProjects, deleteProject } from "../../firebase/api";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  getAllProjects,
+  deleteProject,
+  updateProject,
+} from "../../firebase/api";
+import { Link } from "react-router-dom";
+
 const Proyectos = () => {
-  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     getAllProjects().then((data) => {
       setProjects(data);
+      console.log("data", data);
     });
   }, []);
 
@@ -19,8 +24,17 @@ const Proyectos = () => {
     });
   };
 
-  const handleEdit = (id) => {
-    navigate(`/admin/proyectos/editar/${id}`);
+  const handleCheckboxChange = (event, projectId) => {
+    const isChecked = event.target.checked;
+
+    setProjects((projects) =>
+      projects.map((project) =>
+        project.id === projectId ? { ...project, activo: isChecked } : project
+      )
+    );
+    console.log("projects1", projects);
+    updateProject(projectId, { activo: isChecked });
+    console.log("projects2", projects);
   };
 
   return (
@@ -38,16 +52,9 @@ const Proyectos = () => {
               <th className="border-b bg-white dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                 Descripción
               </th>
-              <th className="border-b bg-white dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+              <th className="border-b bg-white dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-center">
                 Opciones
               </th>
-              <Link
-                to={`/admin/proyectos/añadir`}
-                state={projects}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Añadir +
-              </Link>
             </tr>
           </thead>
           <tbody className="bg-white dark:bg-slate-800">
@@ -83,9 +90,12 @@ const Proyectos = () => {
                   </button>
                   <input
                     type="checkbox"
-                    id="vehicle1"
-                    name="vehicle1"
-                    value="Bike"
+                    id={project.id}
+                    name={project.titulo}
+                    checked={project.activo}
+                    onChange={(event) =>
+                      handleCheckboxChange(event, project.id)
+                    }
                   />
                 </td>
               </tr>
@@ -93,6 +103,13 @@ const Proyectos = () => {
           </tbody>
         </table>
       </div>
+      <Link
+        to={`/admin/proyectos/añadir`}
+        state={projects}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Añadir +
+      </Link>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getFirestore, getDocs, collection } from "firebase/firestore";
 import "./App.css";
 import ProjectCard from "./components/ProjectCard";
 import { motion } from "framer-motion";
@@ -7,7 +6,7 @@ import InfoCard from "./components/InfoCard";
 import Lottie from "lottie-react";
 import darkModeButton from "./assets/animations/darkModeButton.json";
 import { Link } from "react-router-dom";
-import { getAllProjects } from "./firebase/api";
+import { getActiveProjects } from "./firebase/api";
 
 function App() {
   const [projects, setProjects] = useState(true);
@@ -31,7 +30,7 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    getAllProjects().then((response) => {
+    getActiveProjects().then((response) => {
       console.log("Response", response);
       setPosts(response);
     });
@@ -145,6 +144,7 @@ function App() {
             <section className="projects grid gap-3 items-stretch content-center grid-cols-2 auto-rows-auto">
               {posts?.map((post, index) => (
                 <motion.a
+                  key={index}
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 1, delay: 0.2 * index }}

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../providers/provider.js";
 import { motion } from "framer-motion";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const AdminLayout = () => {
   const { authUser, userSignOut } = useContext(GlobalContext);
@@ -28,9 +28,6 @@ const AdminLayout = () => {
       </header>
       <div className="flex gap-2.5px w-full h-full overflow-hidden">
         <aside className="w-64 flex flex-col bg-slate-500/[0.5] text-center p-2.5 gap-5 overflow-y-auto">
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
-          <button className="hover:bg-slate-500/[0.55]">Inicio</button>
           <button className="hover:bg-slate-500/[0.55]">Inicio</button>
           <button
             onClick={handleNavigation}

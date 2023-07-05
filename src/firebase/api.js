@@ -6,6 +6,8 @@ import {
   deleteDoc,
   getDocs,
   addDoc,
+  where,
+  query,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes, getStorage } from "firebase/storage";
 
@@ -46,4 +48,26 @@ export const uploadImage = async (file) => {
   const uploadTask = await uploadBytes(storageRef, file);
   const downloadURL = await getDownloadURL(uploadTask.ref);
   return downloadURL;
+};
+
+//create a function to get all active projects
+export const getActiveProjects = async () => {
+  const queryDoc = query(
+    collection(querydb, "Proyectos"),
+    where("activo", "==", true)
+  );
+  const postData = [];
+  const response = await getDocs(queryDoc);
+  console.log("ResponseActive", response);
+  response.docs.forEach((doc) => {
+    console.log("Doc", doc.id);
+    postData.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  });
+  console.log("PostData", postData);
+  return postData;
+
+  //create a function to get all true projects
 };

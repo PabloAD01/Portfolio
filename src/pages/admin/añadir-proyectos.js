@@ -13,6 +13,7 @@ const AñadirProyectos = () => {
     descripcion: "",
     url: "",
     imagen: "",
+    activo: true,
   });
 
   const handleImageUpload = (event) => {
@@ -148,6 +149,25 @@ const AñadirProyectos = () => {
             placeholder={state.url}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
+        </div>
+
+        <div className="flex gap-1 border p-2 border-cyan-100 content-center">
+          <input
+            type="checkbox"
+            id="activo"
+            name="activo"
+            checked={proyecto.activo}
+            onChange={(e) =>
+              setProyecto({ ...proyecto, activo: e.currentTarget.checked })
+            }
+          />
+          <label
+            className="flex border bg-slate-400 text-gray-700 text-sm font-bold mb-2"
+            htmlFor="activo"
+            for="activo"
+          >
+            Mostrar proyecto
+          </label>
         </div>
 
         <div className="flex items-center justify-between">
