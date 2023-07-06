@@ -7,6 +7,7 @@ import Lottie from "lottie-react";
 import darkModeButton from "./assets/animations/darkModeButton.json";
 import { Link } from "react-router-dom";
 import { getActiveProjects } from "./firebase/api";
+import amplitude from "amplitude-js";
 
 function App() {
   const [projects, setProjects] = useState(true);
@@ -91,10 +92,10 @@ function App() {
             animate={{ opacity: 1 }}
           >
             <h1 className="text-6xl font-bold">Pablo</h1>
-            <button>
+            <div className="flex gap-4 font-semibold">
               <Link to="/login">Login</Link>
               <Link to="/register">Register</Link>
-            </button>
+            </div>
 
             <Lottie
               animationData={darkModeButton}
@@ -148,6 +149,12 @@ function App() {
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 1, delay: 0.2 * index }}
+                  onClick={() =>
+                    amplitude.getInstance().logEvent("click_on_project", {
+                      titulo: post.titulo,
+                      url: post.url,
+                    })
+                  }
                   href={post.url || ""}
                 >
                   <ProjectCard post={post} />
@@ -167,7 +174,7 @@ function App() {
             )}
           </div>
         </main>
-        <footer className="flex justify-center text-sm font-medium py-2.5 bg-slate-800/[0.5]">
+        <footer className="flex justify-center text-sm font-medium py-2.5 bg-slate-800/[0.5] ">
           © 2023 Pablo Araya Díaz
         </footer>
       </div>

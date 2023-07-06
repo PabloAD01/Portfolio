@@ -13,8 +13,10 @@ import Proyectos from "./pages/admin/proyectos";
 import Dashboard from "./pages/dashboard";
 import EditarProyectos from "./pages/admin/editar-proyectos";
 import AñadirProyectos from "./pages/admin/añadir-proyectos";
+import amplitude from "amplitude-js";
 
-// initializeApp(firebaseConfig);
+// initialize the client
+amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
