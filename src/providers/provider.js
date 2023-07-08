@@ -17,13 +17,14 @@ export function GlobalProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
+        console.log("User is signed in", user);
         navigate("/admin");
       } else {
         setAuthUser(null);
       }
     });
     return unsubscribe;
-  }, []);
+  }, [authUser]);
 
   const userSignOut = () => {
     signOut(auth)

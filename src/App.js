@@ -84,7 +84,7 @@ function App() {
 
   return (
     <div className="flex h-full w-screen justify-center duration-75 dark:bg-slate-900">
-      <div className="w-max h-full text-neutral-300 flex flex-col gap-2.5">
+      <div className=" w-3/5 h-full text-neutral-300 flex flex-col gap-2.5">
         <header className="header flex flex-col gap-2.5">
           <motion.div
             className="flex justify-between items-center bg-stone-400/[0.13] duration-1000  px-2.5 py-5"
@@ -144,7 +144,7 @@ function App() {
           {projects && (
             <section className="projects grid gap-3 items-stretch content-center grid-cols-2 auto-rows-auto">
               {posts?.map((post, index) => (
-                <motion.a
+                <motion.div
                   key={index}
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -155,10 +155,9 @@ function App() {
                       url: post.url,
                     })
                   }
-                  href={post.url || ""}
                 >
                   <ProjectCard post={post} />
-                </motion.a>
+                </motion.div>
               ))}
             </section>
           )}

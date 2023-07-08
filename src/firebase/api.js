@@ -60,7 +60,6 @@ export const getActiveProjects = async () => {
   const response = await getDocs(queryDoc);
   console.log("ResponseActive", response);
   response.docs.forEach((doc) => {
-    console.log("Doc", doc.id);
     postData.push({
       id: doc.id,
       ...doc.data(),

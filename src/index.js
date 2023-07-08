@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import AdminLayout from "./layouts/AdminLayout";
+
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import "./firebase/config.js";
@@ -14,6 +14,9 @@ import Dashboard from "./pages/dashboard";
 import EditarProyectos from "./pages/admin/editar-proyectos";
 import AñadirProyectos from "./pages/admin/añadir-proyectos";
 import amplitude from "amplitude-js";
+import Register from "./pages/register";
+
+const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
 
 // initialize the client
 amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN);
@@ -25,13 +28,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           <Route
             path="/admin"
             element={
-              <PrivateRoute>
-                <AdminLayout />
-              </PrivateRoute>
+              <Suspense fallback={<div>Loading...</div>}>
+                <PrivateRoute>
+                  <AdminLayout />
+                </PrivateRoute>
+              </Suspense>
             }
           >
             <Route path="" element={<Dashboard />} />

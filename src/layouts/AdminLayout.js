@@ -14,7 +14,7 @@ const AdminLayout = () => {
 
   return (
     <motion.div
-      className="w-screen h-screen flex flex-col items-center text-white"
+      className="w-screen h-screen flex flex-col items-center font-semibold text-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -36,12 +36,14 @@ const AdminLayout = () => {
             Proyectos
           </button>
         </aside>
-        <main className="w-full p-2.5 bg-slate-500/[0.9] overflow-y-auto p-4">
-          <Outlet />
+        <main className="w-full p-2 bg-slate-500/[0.9] overflow-y-auto">
+          <div className="h-full p-2">
+            <Outlet />
+          </div>
         </main>
       </div>
       <footer className="w-full flex justify-center bg-slate-500/[0.5] p-2.5">
-        footer
+        © 2023 Pablo Araya Díaz
       </footer>
     </motion.div>
   );
