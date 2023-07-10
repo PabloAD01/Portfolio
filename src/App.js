@@ -92,10 +92,6 @@ function App() {
             animate={{ opacity: 1 }}
           >
             <h1 className="text-6xl font-bold">Pablo</h1>
-            <div className="flex gap-4 font-semibold">
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </div>
 
             <Lottie
               animationData={darkModeButton}

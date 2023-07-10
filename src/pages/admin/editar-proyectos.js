@@ -83,6 +83,60 @@ const EditarProyectos = () => {
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="github"
+          >
+            Github
+          </label>
+          <input
+            onChange={(e) =>
+              setProyecto({
+                ...proyecto,
+                links: {
+                  ...proyecto.links,
+                  github: {
+                    ...proyecto.links.github,
+                    url: e.currentTarget.value,
+                  },
+                },
+              })
+            }
+            type="text"
+            id="github"
+            placeholder=""
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="web"
+          >
+            Web
+          </label>
+          <input
+            onChange={(e) =>
+              setProyecto({
+                ...proyecto,
+                links: {
+                  ...proyecto.links,
+                  web: {
+                    ...proyecto.links.web,
+                    url: e.currentTarget.value,
+                  },
+                },
+              })
+            }
+            type="text"
+            id="web"
+            placeholder=""
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="imagen"
           >
             Imagen

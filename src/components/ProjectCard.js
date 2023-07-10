@@ -11,7 +11,7 @@ const ProjectCard = ({ post }) => {
           alt="Imagen Proyecto"
         />
         <a
-          className=" group h-full w-full absolute flex  justify-center items-center gap-1  bg-none transition:300ms hover:text-white hover:bg-black/[0.6] rounded-lg"
+          className=" group h-full w-full absolute flex  justify-center items-center gap-1  transition:300ms hover:text-white hover:bg-black/[0.6] rounded-lg"
           href={post.url}
         >
           {post?.links &&
@@ -20,7 +20,7 @@ const ProjectCard = ({ post }) => {
                 <img
                   src={post.links[key].icon}
                   alt="Icono"
-                  className="w-20 h-20"
+                  className="w-16 h-16 invisible group-hover:visible "
                 />
               </a>
             ))}

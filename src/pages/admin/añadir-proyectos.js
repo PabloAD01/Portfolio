@@ -11,6 +11,16 @@ const AñadirProyectos = () => {
   const [proyecto, setProyecto] = useState({
     titulo: "",
     descripcion: "",
+    links: {
+      github: {
+        icon: "",
+        url: "",
+      },
+      web: {
+        icon: "",
+        url: "",
+      },
+    },
     url: "",
     imagen: "",
     activo: true,
@@ -96,7 +106,7 @@ const AñadirProyectos = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-white  px-8 pt-6 pb-8  w-full"
+        className="bg-white  px-8 pt-6 pb-8  w-full flex flex-col"
       >
         <div className="mb-4">
           <label
@@ -151,7 +161,61 @@ const AñadirProyectos = () => {
           />
         </div>
 
-        <div className="flex gap-1 border p-2 border-cyan-100 content-center">
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="github"
+          >
+            Github
+          </label>
+          <input
+            onChange={(e) =>
+              setProyecto({
+                ...proyecto,
+                links: {
+                  ...proyecto.links,
+                  github: {
+                    ...proyecto.links.github,
+                    url: e.currentTarget.value,
+                  },
+                },
+              })
+            }
+            type="text"
+            id="github"
+            placeholder=""
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="web"
+          >
+            Web
+          </label>
+          <input
+            onChange={(e) =>
+              setProyecto({
+                ...proyecto,
+                links: {
+                  ...proyecto.links,
+                  web: {
+                    ...proyecto.links.web,
+                    url: e.currentTarget.value,
+                  },
+                },
+              })
+            }
+            type="text"
+            id="web"
+            placeholder=""
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+
+        <div className="flex gap-1  p-2 content-center">
           <input
             type="checkbox"
             id="activo"
@@ -162,7 +226,7 @@ const AñadirProyectos = () => {
             }
           />
           <label
-            className="flex border bg-slate-400 text-gray-700 text-sm font-bold mb-2"
+            className="flex text-gray-700 text-sm font-bold mb-2"
             htmlFor="activo"
             for="activo"
           >
