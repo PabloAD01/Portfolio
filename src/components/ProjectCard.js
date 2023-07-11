@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const ProjectCard = ({ post }) => {
   return (
@@ -16,13 +16,13 @@ const ProjectCard = ({ post }) => {
         >
           {post?.links &&
             Object.keys(post.links).map((key, index) => (
-              <a href={post.links[key].url} key={index}>
+              <Link to={`/web/${post.id}`} key={index} state={post}>
                 <img
                   src={post.links[key].icon}
                   alt="Icono"
                   className="w-16 h-16 invisible group-hover:visible "
                 />
-              </a>
+              </Link>
             ))}
         </a>
       </div>

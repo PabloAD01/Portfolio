@@ -15,6 +15,7 @@ import EditarProyectos from "./pages/admin/editar-proyectos";
 import AñadirProyectos from "./pages/admin/añadir-proyectos";
 import amplitude from "amplitude-js";
 import Register from "./pages/register";
+import Web from "./layouts/WebLayout";
 
 const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/web/:id" element={<Web />} />
 
           <Route
             path="/admin"

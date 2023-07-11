@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import InfoCard from "./components/InfoCard";
 import Lottie from "lottie-react";
 import darkModeButton from "./assets/animations/darkModeButton.json";
-import { Link } from "react-router-dom";
+
 import { getActiveProjects } from "./firebase/api";
 import amplitude from "amplitude-js";
 
@@ -108,7 +108,7 @@ function App() {
             initial="hidden"
             animate="visible"
           >
-            <div className="flex flex-col font-extrabold flex flex-col gap-5 justify-center">
+            <div className="flex flex-col font-extrabold gap-5 justify-center">
               <p className="text-6xl">Front-End Developer</p>
               <p className="text-8xl">React</p>
               <motion.button
@@ -131,12 +131,7 @@ function App() {
             <img src={require("./assets/images/image_1.png")} alt="Imagen" />
           </motion.div>
         </header>
-        <main
-          className="main flex flex-col justify-content items-center gap-4 p-2.5"
-          variants={parentVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        <main className="main flex flex-col justify-content items-center gap-4 p-2.5">
           {projects && (
             <section className="projects grid gap-3 items-stretch content-center grid-cols-2 auto-rows-auto">
               {posts?.map((post, index) => (
