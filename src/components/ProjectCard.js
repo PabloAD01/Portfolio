@@ -16,7 +16,11 @@ const ProjectCard = ({ post }) => {
         >
           {post?.links &&
             Object.keys(post.links).map((key, index) => (
-              <Link to={`/web/${post.id}`} key={index} state={post}>
+              <Link
+                to={key === "web" ? `/web/${post.id}` : post.links.github.url}
+                key={index}
+                state={post}
+              >
                 <img
                   src={post.links[key].icon}
                   alt="Icono"

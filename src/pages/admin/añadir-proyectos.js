@@ -1,6 +1,10 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { addProject, uploadImage } from "../../firebase/api";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const AñadirProyectos = () => {
   const fileInputRef = useRef(null);
@@ -18,11 +22,11 @@ const AñadirProyectos = () => {
       },
       web: {
         icon: "",
-        url: "",
       },
     },
     url: "",
     imagen: "",
+    content: "",
     activo: true,
   });
 
@@ -40,6 +44,13 @@ const AñadirProyectos = () => {
     }
   };
 
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const handleEditorStateChange = (newEditorState) => {
+    console.log("newEditorState", newEditorState);
+    setEditorState(newEditorState);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (file) {
@@ -48,6 +59,9 @@ const AñadirProyectos = () => {
         const newProject = {
           ...proyecto,
           imagen: res,
+          content: JSON.stringify(
+            convertToRaw(editorState.getCurrentContent())
+          ),
         };
         addProject(newProject).then((res) => {
           console.log("res", res);
@@ -181,36 +195,9 @@ const AñadirProyectos = () => {
                 },
               })
             }
-            type="text"
+            type="url"
             id="github"
-            placeholder=""
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="web"
-          >
-            Web
-          </label>
-          <input
-            onChange={(e) =>
-              setProyecto({
-                ...proyecto,
-                links: {
-                  ...proyecto.links,
-                  web: {
-                    ...proyecto.links.web,
-                    url: e.currentTarget.value,
-                  },
-                },
-              })
-            }
-            type="text"
-            id="web"
-            placeholder=""
+            placeholder={proyecto.links.github.url}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
@@ -232,6 +219,23 @@ const AñadirProyectos = () => {
           >
             Mostrar proyecto
           </label>
+        </div>
+
+        <div>
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="editor"
+          >
+            Contenido
+          </label>
+
+          <Editor
+            editorState={editorState}
+            toolbarClassName="toolbarClassName text-gray-700"
+            wrapperClassName="wrapperClassName h-max"
+            editorClassName="editorClassName text-gray-700"
+            onEditorStateChange={handleEditorStateChange}
+          />
         </div>
 
         <div className="flex items-center justify-between">

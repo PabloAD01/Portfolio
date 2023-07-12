@@ -1,15 +1,44 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { updateProject } from "../../firebase/api";
+import {
+  EditorState,
+  ContentState,
+  convertToRaw,
+  convertFromRaw,
+} from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 const EditarProyectos = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [proyecto, setProyecto] = useState({ ...state });
 
+  let contentState = ContentState.createFromText("");
+  if (state.content) {
+    const parsedContent = JSON.parse(state.content);
+    contentState = convertFromRaw(parsedContent);
+  }
+
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(contentState)
+  );
+  console.log("editorState", editorState);
+
+  const handleEditorStateChange = (newEditorState) => {
+    console.log("newEditorState", newEditorState);
+    setEditorState(newEditorState);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Proyectoo", proyecto);
-    updateProject(proyecto.id, proyecto).then((res) => {
+    updateProject(proyecto.id, {
+      ...proyecto,
+      content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+    }).then((res) => {
       console.log("res", res);
       navigate("/admin/proyectos");
     });
@@ -52,6 +81,7 @@ const EditarProyectos = () => {
           >
             Descripción
           </label>
+
           <textarea
             onChange={(e) =>
               setProyecto({ ...proyecto, descripcion: e.currentTarget.value })
@@ -100,36 +130,9 @@ const EditarProyectos = () => {
                 },
               })
             }
-            type="text"
+            type="url"
             id="github"
-            placeholder=""
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="web"
-          >
-            Web
-          </label>
-          <input
-            onChange={(e) =>
-              setProyecto({
-                ...proyecto,
-                links: {
-                  ...proyecto.links,
-                  web: {
-                    ...proyecto.links.web,
-                    url: e.currentTarget.value,
-                  },
-                },
-              })
-            }
-            type="text"
-            id="web"
-            placeholder=""
+            placeholder={state.links.github.url}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
@@ -147,6 +150,22 @@ const EditarProyectos = () => {
             accept="image/*"
             placeholder="Imagen del proyecto"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div>
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="editor"
+          >
+            Contenido
+          </label>
+
+          <Editor
+            editorState={editorState}
+            toolbarClassName="toolbarClassName text-gray-700"
+            wrapperClassName="wrapperClassName h-max"
+            editorClassName="editorClassName text-gray-700"
+            onEditorStateChange={handleEditorStateChange}
           />
         </div>
 

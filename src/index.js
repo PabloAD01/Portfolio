@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 
 import "./index.css";
+import "./styles/post-css.css";
 import reportWebVitals from "./reportWebVitals";
 import "./firebase/config.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -23,34 +24,32 @@ const AdminLayout = lazy(() => import("./layouts/AdminLayout"));
 amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_TOKEN);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Router>
-      <GlobalProvider>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/web/:id" element={<Web />} />
+  <Router>
+    <GlobalProvider>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/web/:id" element={<Web />} />
 
-          <Route
-            path="/admin"
-            element={
-              <Suspense fallback={<div>Loading...</div>}>
-                <PrivateRoute>
-                  <AdminLayout />
-                </PrivateRoute>
-              </Suspense>
-            }
-          >
-            <Route path="" element={<Dashboard />} />
-            <Route path="proyectos" element={<Proyectos />} />
-            <Route path="proyectos/editar/:id" element={<EditarProyectos />} />
-            <Route path="proyectos/añadir" element={<AñadirProyectos />} />
-          </Route>
-        </Routes>
-      </GlobalProvider>
-    </Router>
-  </React.StrictMode>
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <PrivateRoute>
+                <AdminLayout />
+              </PrivateRoute>
+            </Suspense>
+          }
+        >
+          <Route path="" element={<Dashboard />} />
+          <Route path="proyectos" element={<Proyectos />} />
+          <Route path="proyectos/editar/:id" element={<EditarProyectos />} />
+          <Route path="proyectos/añadir" element={<AñadirProyectos />} />
+        </Route>
+      </Routes>
+    </GlobalProvider>
+  </Router>
 );
 
 // If you want to start measuring performance in your app, pass a function
