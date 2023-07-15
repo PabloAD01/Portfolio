@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ProjectCard = ({ post }) => {
+const ProjectCard = ({ post, setMainContent }) => {
+  function handleClick() {
+    setMainContent(false);
+  }
+
   return (
-    <div className="h-full cursor-pointer flex flex-col justify-center p-2.5 gap-2.5">
+    <div className="h-full flex flex-col justify-center p-2.5 gap-2.5">
       <div className="flex relative">
         <img
           className="rounded-lg  w-full h-96 "
@@ -20,6 +24,7 @@ const ProjectCard = ({ post }) => {
                 to={key === "web" ? `/web/${post.id}` : post.links.github.url}
                 key={index}
                 state={post}
+                onClick={handleClick}
               >
                 <img
                   src={post.links[key].icon}

@@ -28,6 +28,7 @@ const AñadirProyectos = () => {
     imagen: "",
     content: "",
     activo: true,
+    visitas: 1,
   });
 
   const handleImageUpload = (event) => {

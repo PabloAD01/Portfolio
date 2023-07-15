@@ -5,6 +5,7 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
+  getDoc,
   addDoc,
   where,
   query,
@@ -70,3 +71,68 @@ export const getActiveProjects = async () => {
 
   //create a function to get all true projects
 };
+
+// export const registrarClick = async (proyectoId) => {
+//   try {
+//     const eventoClick = {
+//       tipo: "click",
+//     };
+
+//     // Obtiene la referencia al documento de eventos del proyecto
+//     const eventosDocRef = doc(querydb, "Proyectos", proyectoId);
+
+//     // Obtiene los datos actuales del documento
+//     const eventosDocSnap = await getDoc(eventosDocRef);
+//     const eventosData = eventosDocSnap.data();
+//     let nuevosEventos = [];
+
+//     if (Array.isArray(eventosData?.clicks)) {
+//       nuevosEventos = [...eventosData.clicks];
+//     }
+
+//     nuevosEventos.push(eventoClick);
+
+//     // Guarda los nuevos datos en el documento
+//     await updateDoc(eventosDocRef, {
+//       clicks: nuevosEventos,
+//     });
+
+//     console.log("Evento de click registrado correctamente");
+//     console.log("Número de clicks:", nuevosEventos.length);
+//   } catch (error) {
+//     console.error("Error al registrar el evento de click:", error);
+//   }
+// };
+
+// export const registrarVisita = async (proyectoId) => {
+//   try {
+//     const eventoVisita = {
+//       tipo: "visita",
+//       fecha: new Date().toISOString(),
+//     };
+
+//     // Obtiene la referencia al documento de eventos del proyecto
+//     const eventosDocRef = doc(querydb, "Proyectos", proyectoId);
+
+//     // Obtiene los datos actuales del documento
+//     const eventosDocSnap = await getDoc(eventosDocRef);
+//     const eventosData = eventosDocSnap.data();
+//     let nuevosEventos = [];
+
+//     if (Array.isArray(eventosData?.visitas)) {
+//       nuevosEventos = [...eventosData.visitas];
+//     }
+
+//     nuevosEventos.push(eventoVisita);
+
+//     // Guarda los nuevos datos en el documento
+//     await updateDoc(eventosDocRef, {
+//       visitas: nuevosEventos,
+//     });
+
+//     console.log("Evento de visita registrado correctamente");
+//     console.log("Número de visitas:", nuevosEventos.length);
+//   } catch (error) {
+//     console.error("Error al registrar el evento de visita:", error);
+//   }
+// };

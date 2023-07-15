@@ -27,10 +27,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
     <GlobalProvider>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<App />}>
+          <Route path="web/:id" element={<Web />} />
+        </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/web/:id" element={<Web />} />
 
         <Route
           path="/admin"
